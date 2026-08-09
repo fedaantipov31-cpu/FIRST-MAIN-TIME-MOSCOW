@@ -1,6 +1,6 @@
-// ======================================
-// TELEGRAM MINI APP
-// ======================================
+// =====================================================
+// TELEGRAM
+// =====================================================
 
 const tg =
     window.Telegram?.WebApp;
@@ -15,14 +15,14 @@ if (tg) {
 
     try {
 
-        tg.setHeaderColor("#241814");
+        tg.setHeaderColor("#211510");
 
-        tg.setBackgroundColor("#241814");
+        tg.setBackgroundColor("#211510");
 
     } catch (error) {
 
         console.log(
-            "Telegram colors unavailable"
+            "Telegram theme API unavailable"
         );
 
     }
@@ -30,9 +30,10 @@ if (tg) {
 }
 
 
-// ======================================
-// PAGE ARRIVAL
-// ======================================
+
+// =====================================================
+// START ANIMATIONS
+// =====================================================
 
 window.addEventListener(
     "load",
@@ -43,41 +44,30 @@ window.addEventListener(
 
                 document.body
                     .classList
-                    .add("loaded");
+                    .add("ready");
 
             },
-            120
+            100
         );
 
     }
 );
 
 
-// ======================================
+
+// =====================================================
 // ELEMENTS
-// ======================================
+// =====================================================
 
-const gmailRow =
+const gmailButton =
     document.getElementById(
-        "gmailRow"
+        "gmailButton"
     );
 
 
-const gmailAction =
+const timeButton =
     document.getElementById(
-        "gmailAction"
-    );
-
-
-const timeRow =
-    document.getElementById(
-        "timeRow"
-    );
-
-
-const timeAction =
-    document.getElementById(
-        "timeAction"
+        "timeButton"
     );
 
 
@@ -87,9 +77,9 @@ const timeScreen =
     );
 
 
-const closeTime =
+const backButton =
     document.getElementById(
-        "closeTime"
+        "backButton"
     );
 
 
@@ -117,9 +107,10 @@ const footerTime =
     );
 
 
-// ======================================
-// HAPTIC FEEDBACK
-// ======================================
+
+// =====================================================
+// HAPTIC
+// =====================================================
 
 function haptic(
     type = "light"
@@ -133,45 +124,36 @@ function haptic(
 
     } catch (error) {
 
-        // Outside Telegram:
-        // simply do nothing.
+        // Ничего не делаем,
+        // если открыто не в Telegram.
 
     }
 
 }
 
 
-// ======================================
+
+// =====================================================
 // GMAIL
-// ======================================
+// =====================================================
 
 function openGmail() {
 
-    haptic("light");
+    haptic("medium");
 
 
-    const gmailUrl =
+    const url =
         "https://mail.google.com/";
 
 
-    /*
-    Inside Telegram:
-    Telegram opens the link.
-
-    In normal browser:
-    regular new tab.
-    */
-
     if (tg?.openLink) {
 
-        tg.openLink(
-            gmailUrl
-        );
+        tg.openLink(url);
 
     } else {
 
         window.open(
-            gmailUrl,
+            url,
             "_blank",
             "noopener,noreferrer"
         );
@@ -181,64 +163,18 @@ function openGmail() {
 }
 
 
-// Whole Gmail row
-
-gmailRow.addEventListener(
+gmailButton.addEventListener(
     "click",
-    () => {
-
-        openGmail();
-
-    }
+    openGmail
 );
 
 
-// Actual OPEN button
 
-gmailAction.addEventListener(
-    "click",
-    event => {
+// =====================================================
+// OPEN CLOCK
+// =====================================================
 
-        /*
-        Otherwise click would
-        fire twice:
-        button + row.
-        */
-
-        event.stopPropagation();
-
-        openGmail();
-
-    }
-);
-
-
-// Enter keyboard support
-
-gmailRow.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Enter" ||
-            event.key === " "
-        ) {
-
-            event.preventDefault();
-
-            openGmail();
-
-        }
-
-    }
-);
-
-
-// ======================================
-// TIME SCREEN
-// ======================================
-
-function openTimeScreen() {
+function openClock() {
 
     haptic("medium");
 
@@ -248,15 +184,14 @@ function openTimeScreen() {
         .remove("closing");
 
 
-    /*
-    Remove and re-add active
-    to restart animation properly.
-    */
-
     timeScreen
         .classList
         .remove("active");
 
+
+    /*
+    Перезапускаем CSS-анимацию.
+    */
 
     void timeScreen.offsetWidth;
 
@@ -268,58 +203,18 @@ function openTimeScreen() {
 }
 
 
-// Whole TIME row
-
-timeRow.addEventListener(
+timeButton.addEventListener(
     "click",
-    () => {
-
-        openTimeScreen();
-
-    }
+    openClock
 );
 
 
-// Actual LIVE button
 
-timeAction.addEventListener(
-    "click",
-    event => {
+// =====================================================
+// CLOSE CLOCK
+// =====================================================
 
-        event.stopPropagation();
-
-        openTimeScreen();
-
-    }
-);
-
-
-// Keyboard
-
-timeRow.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Enter" ||
-            event.key === " "
-        ) {
-
-            event.preventDefault();
-
-            openTimeScreen();
-
-        }
-
-    }
-);
-
-
-// ======================================
-// CLOSE TIME SCREEN
-// ======================================
-
-function closeTimeScreen() {
+function closeClock() {
 
     if (
         !timeScreen
@@ -353,19 +248,20 @@ function closeTimeScreen() {
                 .remove("closing");
 
         },
-        1200
+        1100
     );
 
 }
 
 
-closeTime.addEventListener(
+backButton.addEventListener(
     "click",
-    closeTimeScreen
+    closeClock
 );
 
 
-// ESC in browser
+
+// ESC на компьютере
 
 document.addEventListener(
     "keydown",
@@ -375,7 +271,7 @@ document.addEventListener(
             event.key === "Escape"
         ) {
 
-            closeTimeScreen();
+            closeClock();
 
         }
 
@@ -383,11 +279,13 @@ document.addEventListener(
 );
 
 
-// ======================================
-// SWIPE RIGHT TO CLOSE
-// ======================================
+
+// =====================================================
+// SWIPE RIGHT
+// =====================================================
 
 let touchStartX = null;
+
 let touchStartY = null;
 
 
@@ -431,34 +329,30 @@ timeScreen.addEventListener(
             event.changedTouches[0];
 
 
-        const differenceX =
+        const dx =
             touch.screenX -
             touchStartX;
 
 
-        const differenceY =
+        const dy =
             Math.abs(
                 touch.screenY -
                 touchStartY
             );
 
 
-        /*
-        Swipe right,
-        but not a vertical swipe.
-        */
-
         if (
-            differenceX > 85 &&
-            differenceY < 90
+            dx > 85 &&
+            dy < 90
         ) {
 
-            closeTimeScreen();
+            closeClock();
 
         }
 
 
         touchStartX = null;
+
         touchStartY = null;
 
     },
@@ -468,17 +362,16 @@ timeScreen.addEventListener(
 );
 
 
-// ======================================
+
+// =====================================================
 // MILANO TIME
-// ======================================
+// =====================================================
 
 function updateMilanoTime() {
 
     const now =
         new Date();
 
-
-    // Hours and minutes
 
     const time =
         new Intl.DateTimeFormat(
@@ -500,8 +393,6 @@ function updateMilanoTime() {
         .format(now);
 
 
-    // Seconds
-
     const second =
         new Intl.DateTimeFormat(
             "it-IT",
@@ -515,8 +406,6 @@ function updateMilanoTime() {
         )
         .format(now);
 
-
-    // Date
 
     const date =
         new Intl.DateTimeFormat(
@@ -559,12 +448,9 @@ function updateMilanoTime() {
 }
 
 
-// immediately
 
 updateMilanoTime();
 
-
-// every second
 
 setInterval(
     updateMilanoTime,
