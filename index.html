@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -12,71 +10,68 @@
 
     <title>Milano Terminal</title>
 
-    <!-- v=10 нужен, чтобы браузер точно не взял старый CSS -->
-    <link rel="stylesheet" href="style.css?v=10">
+    <!-- ВАЖНО: правильное подключение CSS -->
+    <link rel="stylesheet" href="./style.css?v=13">
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
 </head>
-
 
 <body>
 
-
 <div class="grain"></div>
-
 
 <main class="terminal-app">
 
-
     <!-- ========================= -->
-    <!-- ВЕРХНИЙ БЛОК -->
+    <!-- HEADER -->
     <!-- ========================= -->
 
     <header class="airport-header">
 
-        <div class="header-line slide-line delay-1">
+        <div class="header-line slide-in" style="--delay: .05s">
             MXP
         </div>
 
-        <div class="header-line slide-line delay-2">
+        <div class="header-line slide-in" style="--delay: .14s">
             MILANO
         </div>
 
-        <div class="header-line slide-line delay-3">
+        <div class="header-line slide-in" style="--delay: .23s">
             DIGITAL TERMINAL
         </div>
 
-        <div class="header-line slide-line delay-4">
+        <div class="header-line slide-in" style="--delay: .32s">
             ONLINE
         </div>
 
-        <div class="header-line service slide-line delay-5">
+        <div class="header-line service slide-in" style="--delay: .41s">
             SERVICE STATUS
         </div>
 
     </header>
 
 
-
     <!-- ========================= -->
-    <!-- ТАБЛО -->
+    <!-- BOARD -->
     <!-- ========================= -->
 
     <section class="board">
 
-
         <!-- GMAIL -->
 
-        <div class="board-row row-enter delay-row-1">
+        <div class="board-row">
 
-            <div class="number">
+            <div
+                class="number slide-in"
+                style="--delay: .58s"
+            >
                 01
             </div>
 
-
-            <div class="row-text">
-
+            <div
+                class="row-text slide-in"
+                style="--delay: .64s"
+            >
                 <div class="row-title">
                     GMAIL
                 </div>
@@ -84,39 +79,39 @@
                 <div class="row-subtitle">
                     MAIL SERVICE
                 </div>
-
             </div>
 
-
             <button
-                class="terminal-button"
+                class="terminal-button button-enter"
                 id="gmailButton"
                 type="button"
+                style="--delay: .70s"
             >
-
                 <span class="button-fill"></span>
 
                 <span class="button-text">
                     OPEN MAIL
                 </span>
-
             </button>
 
         </div>
 
 
+        <!-- CLOCK -->
 
-        <!-- MILANO TIME -->
+        <div class="board-row">
 
-        <div class="board-row row-enter delay-row-2">
-
-            <div class="number">
+            <div
+                class="number slide-in"
+                style="--delay: .82s"
+            >
                 02
             </div>
 
-
-            <div class="row-text">
-
+            <div
+                class="row-text slide-in"
+                style="--delay: .88s"
+            >
                 <div class="row-title">
                     MILANO TIME
                 </div>
@@ -124,39 +119,39 @@
                 <div class="row-subtitle">
                     LOCAL CLOCK
                 </div>
-
             </div>
 
-
             <button
-                class="terminal-button"
+                class="terminal-button button-enter"
                 id="timeButton"
                 type="button"
+                style="--delay: .94s"
             >
-
                 <span class="button-fill"></span>
 
                 <span class="button-text">
                     OPEN CLOCK
                 </span>
-
             </button>
 
         </div>
 
 
+        <!-- THIRD -->
 
-        <!-- GATE 03 -->
+        <div class="board-row">
 
-        <div class="board-row row-enter delay-row-3">
-
-            <div class="number">
+            <div
+                class="number slide-in"
+                style="--delay: 1.06s"
+            >
                 03
             </div>
 
-
-            <div class="row-text">
-
+            <div
+                class="row-text slide-in"
+                style="--delay: 1.12s"
+            >
                 <div class="row-title">
                     GATE 03
                 </div>
@@ -164,76 +159,74 @@
                 <div class="row-subtitle">
                     NOT ASSIGNED
                 </div>
-
             </div>
 
-
             <button
-                class="terminal-button disabled-button"
+                class="terminal-button disabled-button button-enter"
                 type="button"
                 disabled
+                style="--delay: 1.18s"
             >
-
-                <span class="button-text dots">
+                <span class="dots">
                     • • •
                 </span>
-
             </button>
 
         </div>
 
-
     </section>
 
 
-
     <!-- ========================= -->
-    <!-- НИЖНИЙ БЛОК -->
+    <!-- FOOTER -->
     <!-- ========================= -->
 
     <footer class="airport-footer">
 
-        <div class="footer-line slide-line footer-delay-1">
+        <div
+            class="footer-line slide-in"
+            style="--delay: 1.30s"
+        >
             TERMINAL / 01
         </div>
 
-        <div class="footer-line slide-line footer-delay-2">
+        <div
+            class="footer-line slide-in"
+            style="--delay: 1.39s"
+        >
             MILANO
         </div>
 
         <div
-            class="footer-time slide-line footer-delay-3"
+            class="footer-time slide-in"
             id="footerTime"
+            style="--delay: 1.48s"
         >
             --:--
         </div>
 
     </footer>
 
-
 </main>
 
 
-
-<!-- ===================================================== -->
-<!-- ЭКРАН ВРЕМЕНИ -->
-<!-- ===================================================== -->
+<!-- ================================================= -->
+<!-- CLOCK SCREEN -->
+<!-- ================================================= -->
 
 <section
     class="time-screen"
     id="timeScreen"
 >
 
-
     <div class="time-grain"></div>
-
 
     <div class="background-milano">
         MILANO
     </div>
 
 
-    <div class="time-top">
+    <header class="time-top">
 
         <button
             class="back-button"
@@ -243,13 +236,11 @@
             BACK
         </button>
 
-
         <div class="time-code">
             MXP / LOCAL
         </div>
 
-    </div>
-
+    </header>
 
 
     <div class="clock-area">
@@ -257,7 +248,6 @@
         <div class="clock-label">
             MILANO LOCAL TIME
         </div>
-
 
         <div class="clock-row">
 
@@ -268,7 +258,6 @@
                 00:00
             </div>
 
-
             <div
                 class="seconds"
                 id="seconds"
@@ -278,9 +267,7 @@
 
         </div>
 
-
-        <div class="clock-line-divider"></div>
-
+        <div class="clock-divider"></div>
 
         <div class="clock-bottom">
 
@@ -299,14 +286,11 @@
 
     </div>
 
-
 </section>
 
 
-
-<script src="script.js?v=10"></script>
-
+<!-- ВАЖНО: правильное подключение JS -->
+<script src="./script.js?v=13"></script>
 
 </body>
-
 </html>
