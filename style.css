@@ -1,67 +1,571 @@
-/* =====================================================
-NEW ULTRA SMOOTH CLOCK TRANSITION
-Ставить В САМЫЙ КОНЕЦ style.css
-===================================================== */
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&display=swap");
 
-.time-screen {
 
-    /* отменяем старые анимации */
-    animation: none !important;
-    transition: none;
+/* =========================================
+RESET
+========================================= */
 
-    visibility: hidden;
-    pointer-events: none;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    opacity: 1;
+:root {
+    --text: #eee3d6;
+    --muted: #9a8677;
 
-    transform:
-        translate3d(100%, 0, 0);
+    --line: rgba(238, 227, 214, 0.13);
+    --button-border: rgba(238, 227, 214, 0.20);
 
-    will-change: transform;
+    --light-panel: #eee4d8;
+    --dark-text: #1c1511;
+}
 
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+
+    overflow-x: hidden;
+
+    color: var(--text);
+
+    background:
+        radial-gradient(
+            circle at 50% -15%,
+            #493126 0%,
+            #2a1b15 35%,
+            #1d120e 65%,
+            #130c09 100%
+        );
+
+    font-family: "DM Mono", monospace;
 }
 
 
-/* =====================================================
-ОТКРЫТИЕ
-===================================================== */
+/* =========================================
+GRAIN
+========================================= */
 
-.time-screen.clock-open {
+.grain,
+.time-grain {
+    position: fixed;
+    inset: 0;
 
-    visibility: visible;
+    pointer-events: none;
 
-    pointer-events: auto;
+    z-index: 100;
 
-    /*
-    Очень плавный въезд.
+    opacity: 0.035;
 
-    Первую часть едет спокойно,
-    потом постепенно замедляется.
-    */
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+}
 
+
+/* =========================================
+MAIN
+========================================= */
+
+.terminal-app {
+    width: min(
+        760px,
+        calc(100% - 36px)
+    );
+
+    margin: 0 auto;
+
+    min-height: 100vh;
+
+    padding-top:
+        max(
+            28px,
+            env(safe-area-inset-top)
+        );
+
+    padding-bottom:
+        max(
+            32px,
+            env(safe-area-inset-bottom)
+        );
+}
+
+
+/* =========================================
+HEADER
+========================================= */
+
+.airport-header {
+    margin-bottom: 2px;
+}
+
+.header-line {
+    width: max-content;
+
+    font-size: 14px;
+
+    line-height: 1.28;
+
+    white-space: nowrap;
+}
+
+.header-line.service {
+    margin-top: 3px;
+}
+
+
+/* =========================================
+ТЕ САМЫЕ ВЫЕЗЖАЮЩИЕ БУКВЫ
+
+ЭТУ АНИМАЦИЮ ОСТАВЛЯЕМ,
+НО ДЕЛАЕМ ЕЩЁ ПЛАВНЕЕ
+========================================= */
+
+.slide-line {
+    opacity: 0;
+
+    transform:
+        translate3d(-80px, 0, 0);
+
+    will-change:
+        transform,
+        opacity;
+}
+
+body.ready .slide-line {
+    animation:
+        smoothAirportText
+        2.15s
+        cubic-bezier(
+            .16,
+            .78,
+            .20,
+            1
+        )
+        forwards;
+}
+
+
+/*
+Одно очень мягкое движение.
+
+Нет резких keyframe-переключений.
+*/
+
+@keyframes smoothAirportText {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translate3d(-80px, 0, 0);
+    }
+
+    15% {
+        opacity: .25;
+    }
+
+    35% {
+        opacity: .65;
+    }
+
+    55% {
+        opacity: .9;
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            translate3d(0, 0, 0);
+    }
+}
+
+
+/* порядок верхних строк */
+
+.delay-1 {
+    animation-delay: .08s !important;
+}
+
+.delay-2 {
+    animation-delay: .18s !important;
+}
+
+.delay-3 {
+    animation-delay: .28s !important;
+}
+
+.delay-4 {
+    animation-delay: .38s !important;
+}
+
+.delay-5 {
+    animation-delay: .48s !important;
+}
+
+
+/* =========================================
+BOARD
+========================================= */
+
+.board {
+    width: 100%;
+}
+
+.board-row {
+    width: 100%;
+
+    min-height: 84px;
+
+    display: grid;
+
+    grid-template-columns:
+        60px
+        170px
+        1fr;
+
+    align-items: center;
+
+    border-bottom:
+        1px solid var(--line);
+
+    opacity: 0;
+
+    transform:
+        translate3d(-55px, 0, 0);
+
+    will-change:
+        transform,
+        opacity;
+}
+
+
+/* строки тоже максимально плавные */
+
+body.ready .board-row {
+    animation:
+        smoothRowArrival
+        2.15s
+        cubic-bezier(
+            .16,
+            .78,
+            .20,
+            1
+        )
+        forwards;
+}
+
+
+@keyframes smoothRowArrival {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translate3d(-55px, 0, 0);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            translate3d(0, 0, 0);
+    }
+}
+
+
+.delay-row-1 {
+    animation-delay: .68s !important;
+}
+
+.delay-row-2 {
+    animation-delay: .84s !important;
+}
+
+.delay-row-3 {
+    animation-delay: 1s !important;
+}
+
+
+/* =========================================
+LEFT TEXT
+========================================= */
+
+.number {
+    color: var(--muted);
+
+    font-size: 9px;
+
+    padding-left: 4px;
+}
+
+.row-text {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.row-title {
+    font-size: 13px;
+
+    white-space: nowrap;
+}
+
+.row-subtitle {
+    font-size: 10px;
+
+    color: var(--muted);
+
+    white-space: nowrap;
+}
+
+
+/* =========================================
+BUTTON
+========================================= */
+
+.terminal-button {
+    position: relative;
+
+    justify-self: stretch;
+
+    width: 100%;
+
+    height: 58px;
+
+    overflow: hidden;
+
+    border:
+        1px solid var(--button-border);
+
+    background:
+        rgba(255, 255, 255, 0.015);
+
+    color: var(--text);
+
+    font-family:
+        "DM Mono",
+        monospace;
+
+    font-size: 11px;
+
+    letter-spacing: .10em;
+
+    cursor: pointer;
+
+    isolation: isolate;
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+    transition:
+        color .7s ease,
+        border-color .7s ease;
+}
+
+
+.button-fill {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: -1;
+
+    background:
+        linear-gradient(
+            90deg,
+            #f0e6da,
+            #e7ddcf
+        );
+
+    transform:
+        translate3d(-101%, 0, 0);
+
+    will-change: transform;
+}
+
+
+/* =========================================
+МЕДЛЕННОЕ ЗАПОЛНЕНИЕ КНОПКИ
+========================================= */
+
+.terminal-button:hover .button-fill,
+.terminal-button:focus-visible .button-fill {
     transform:
         translate3d(0, 0, 0);
 
     transition:
         transform
-        2.05s
+        1.55s
         cubic-bezier(
-            .20,
-            .72,
+            .28,
+            .04,
             .18,
             1
         );
 }
 
 
-/* =====================================================
-ЗАКРЫТИЕ
-===================================================== */
+.terminal-button:hover,
+.terminal-button:focus-visible {
+    color: var(--dark-text);
+}
+
+
+.button-text {
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.dots {
+    font-size: 15px;
+
+    letter-spacing: .42em;
+
+    color: var(--muted);
+}
+
+
+.disabled-button {
+    cursor: default;
+
+    opacity: .72;
+}
+
+.disabled-button:hover {
+    color: var(--text);
+}
+
+
+/* =========================================
+FOOTER
+========================================= */
+
+.airport-footer {
+    padding-top: 5px;
+}
+
+.footer-line {
+    width: max-content;
+
+    font-size: 13px;
+
+    line-height: 1.2;
+}
+
+.footer-time {
+    width: max-content;
+
+    margin-top: 4px;
+
+    font-size: 9px;
+
+    color: var(--muted);
+}
+
+
+.footer-delay-1 {
+    animation-delay: 1.20s !important;
+}
+
+.footer-delay-2 {
+    animation-delay: 1.32s !important;
+}
+
+.footer-delay-3 {
+    animation-delay: 1.44s !important;
+}
+
+
+/* ====================================================
+TIME SCREEN
+==================================================== */
+
+.time-screen {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 50;
+
+    overflow: hidden;
+
+    color: var(--text);
+
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            #493126 0%,
+            #2a1b15 45%,
+            #150d0a 100%
+        );
+
+    /*
+    Экран ждёт полностью справа.
+    */
+
+    transform:
+        translate3d(100%, 0, 0);
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    will-change: transform;
+
+    backface-visibility: hidden;
+
+    -webkit-backface-visibility: hidden;
+}
+
+
+/* ====================================================
+ОЧЕНЬ ПЛАВНОЕ ОТКРЫТИЕ ЧАСОВ
+==================================================== */
+
+.time-screen.clock-open {
+    visibility: visible;
+
+    pointer-events: auto;
+
+    transform:
+        translate3d(0, 0, 0);
+
+    /*
+    2.25 секунды.
+
+    Никаких keyframes.
+    Только один физически
+    непрерывный transition.
+    */
+
+    transition:
+        transform
+        2.25s
+        cubic-bezier(
+            .18,
+            .76,
+            .18,
+            1
+        );
+}
+
+
+/* ====================================================
+CLOSE
+==================================================== */
 
 .time-screen.clock-close {
-
     visibility: visible;
 
     pointer-events: none;
@@ -73,65 +577,42 @@ NEW ULTRA SMOOTH CLOCK TRANSITION
         transform
         1.65s
         cubic-bezier(
-            .42,
-            0,
-            .32,
+            .45,
+            .02,
+            .50,
             1
         );
 }
 
 
-/* =====================================================
-САМО ВРЕМЯ
+/* ====================================================
+TIME TOP
+==================================================== */
 
-Оно движется чуть медленнее панели.
-Это создаёт ощущение инерции.
-===================================================== */
+.time-top {
+    position: relative;
 
-.time-screen .clock-area {
+    z-index: 4;
 
-    opacity: 0;
+    width:
+        min(
+            900px,
+            calc(100% - 40px)
+        );
 
-    /*
-    transform здесь НЕ трогаем,
-    потому что он уже используется
-    для центрирования clock-area.
-    */
+    margin: auto;
 
-    margin-left: 55px;
+    padding-top:
+        max(
+            25px,
+            env(safe-area-inset-top)
+        );
 
-    transition:
-        margin-left
-        1.8s
-        cubic-bezier(
-            .16,
-            1,
-            .30,
-            1
-        ),
+    display: flex;
 
-        opacity
-        1.1s
-        ease;
-}
+    align-items: center;
 
-
-.time-screen.clock-open .clock-area {
-
-    opacity: 1;
-
-    margin-left: 0;
-
-    transition-delay:
-        .28s;
-}
-
-
-/* =====================================================
-ВЕРХ: BACK + MXP / LOCAL
-===================================================== */
-
-.time-screen .time-top {
+    justify-content: space-between;
 
     opacity: 0;
 
@@ -140,51 +621,348 @@ NEW ULTRA SMOOTH CLOCK TRANSITION
 
     transition:
         transform
-        1.7s
+        1.9s
         cubic-bezier(
             .16,
-            1,
-            .30,
+            .78,
+            .20,
             1
         ),
-
         opacity
-        1s
+        1.2s
         ease;
 }
 
 
 .time-screen.clock-open .time-top {
-
     opacity: 1;
 
     transform:
         translate3d(0, 0, 0);
 
-    transition-delay:
-        .20s;
+    transition-delay: .25s;
 }
 
 
-/* =====================================================
-БОЛЬШАЯ НАДПИСЬ MILANO НА ФОНЕ
-===================================================== */
+/* =========================================
+BACK BUTTON
+========================================= */
 
-.time-screen .background-milano {
+.back-button {
+    border:
+        1px solid var(--button-border);
+
+    background:
+        rgba(255, 255, 255, .02);
+
+    color: var(--text);
+
+    padding:
+        11px
+        18px;
+
+    font-family:
+        "DM Mono",
+        monospace;
+
+    font-size: 10px;
+
+    letter-spacing: .1em;
+
+    cursor: pointer;
+}
+
+
+.time-code {
+    color: var(--muted);
+
+    font-size: 9px;
+
+    letter-spacing: .17em;
+}
+
+
+/* ====================================================
+BACKGROUND MILANO
+==================================================== */
+
+.background-milano {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(-8deg);
+
+    font-size:
+        min(
+            30vw,
+            420px
+        );
+
+    letter-spacing: -.1em;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .018
+        );
+
+    white-space: nowrap;
+
+    pointer-events: none;
 
     opacity: 0;
 
     transition:
         opacity
-        1.8s
+        2s
         ease;
 }
 
 
 .time-screen.clock-open .background-milano {
+    opacity: 1;
+
+    transition-delay: .35s;
+}
+
+
+/* ====================================================
+CLOCK AREA
+==================================================== */
+
+.clock-area {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width:
+        min(
+            900px,
+            calc(100% - 40px)
+        );
+
+    /*
+    Центр + небольшой отступ вправо.
+    */
+
+    transform:
+        translate(
+            calc(-50% + 55px),
+            -50%
+        );
+
+    opacity: 0;
+
+    z-index: 3;
+
+    will-change:
+        transform,
+        opacity;
+
+    transition:
+        transform
+        2s
+        cubic-bezier(
+            .16,
+            .78,
+            .20,
+            1
+        ),
+        opacity
+        1.4s
+        ease;
+}
+
+
+.time-screen.clock-open .clock-area {
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
 
     opacity: 1;
 
-    transition-delay:
-        .4s;
+    transition-delay: .35s;
+}
+
+
+/* =========================================
+CLOCK
+========================================= */
+
+.clock-label {
+    color: var(--muted);
+
+    font-size: 9px;
+
+    letter-spacing: .25em;
+
+    margin-bottom: 20px;
+}
+
+
+.clock-row {
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 18px;
+}
+
+
+.clock {
+    font-size:
+        clamp(
+            75px,
+            17vw,
+            190px
+        );
+
+    font-weight: 300;
+
+    letter-spacing: -.09em;
+
+    line-height: .82;
+}
+
+
+.seconds {
+    margin-bottom: 5px;
+
+    font-size:
+        clamp(
+            18px,
+            3vw,
+            30px
+        );
+
+    color: var(--muted);
+}
+
+
+.clock-line-divider {
+    height: 1px;
+
+    margin-top: 30px;
+
+    background: var(--line);
+}
+
+
+.clock-bottom {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-top: 17px;
+}
+
+
+.clock-city {
+    font-size: 13px;
+
+    letter-spacing: .35em;
+}
+
+
+.clock-date {
+    color: var(--muted);
+
+    font-size: 9px;
+
+    letter-spacing: .08em;
+
+    text-align: right;
+}
+
+
+/* =========================================
+MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+    .terminal-app {
+        width:
+            calc(100% - 28px);
+    }
+
+
+    .board-row {
+        grid-template-columns:
+            34px
+            112px
+            1fr;
+
+        min-height: 85px;
+    }
+
+
+    .number {
+        font-size: 8px;
+    }
+
+
+    .row-title {
+        font-size: 11px;
+    }
+
+
+    .row-subtitle {
+        font-size: 8px;
+    }
+
+
+    .terminal-button {
+        height: 54px;
+
+        font-size: 9px;
+    }
+
+
+    .header-line {
+        font-size: 12px;
+    }
+
+
+    .clock-bottom {
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+
+    .clock-date {
+        max-width: 160px;
+    }
+
+}
+
+
+@media (max-width: 420px) {
+
+    .board-row {
+        grid-template-columns:
+            28px
+            100px
+            1fr;
+    }
+
+
+    .terminal-button {
+        font-size: 8px;
+
+        letter-spacing: .07em;
+    }
+
 }
