@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -10,68 +12,70 @@
 
     <title>Milano Terminal</title>
 
-    <link rel="stylesheet" href="style.css">
+    <!-- v=10 нужен, чтобы браузер точно не взял старый CSS -->
+    <link rel="stylesheet" href="style.css?v=10">
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 </head>
+
 
 <body>
 
-<div class="noise"></div>
 
-<main class="app">
+<div class="grain"></div>
 
-    <!-- HEADER -->
 
-    <header class="topbar entrance entrance-1">
+<main class="terminal-app">
 
-        <div>
-            <div class="airport-code">MXP</div>
-            <div class="city-name">MILANO</div>
+
+    <!-- ========================= -->
+    <!-- ВЕРХНИЙ БЛОК -->
+    <!-- ========================= -->
+
+    <header class="airport-header">
+
+        <div class="header-line slide-line delay-1">
+            MXP
         </div>
 
-        <div class="terminal-info">
-            <span>DIGITAL TERMINAL</span>
+        <div class="header-line slide-line delay-2">
+            MILANO
+        </div>
 
-            <span class="online">
-                <span class="online-dot"></span>
-                ONLINE
-            </span>
+        <div class="header-line slide-line delay-3">
+            DIGITAL TERMINAL
+        </div>
+
+        <div class="header-line slide-line delay-4">
+            ONLINE
+        </div>
+
+        <div class="header-line service slide-line delay-5">
+            SERVICE STATUS
         </div>
 
     </header>
 
 
-    <!-- TITLE -->
 
-    <section class="hero">
-
-        <div class="service-label entrance entrance-2">
-            SERVICE STATUS
-        </div>
-
-    </section>
-
-
-    <!-- BOARD -->
+    <!-- ========================= -->
+    <!-- ТАБЛО -->
+    <!-- ========================= -->
 
     <section class="board">
 
 
         <!-- GMAIL -->
 
-        <div
-            class="board-row entrance entrance-3"
-            id="gmailRow"
-            role="button"
-            tabindex="0"
-        >
+        <div class="board-row row-enter delay-row-1">
 
-            <div class="row-number">
+            <div class="number">
                 01
             </div>
 
-            <div class="row-info">
+
+            <div class="row-text">
 
                 <div class="row-title">
                     GMAIL
@@ -85,35 +89,33 @@
 
 
             <button
-                class="action-button"
-                id="gmailAction"
+                class="terminal-button"
+                id="gmailButton"
                 type="button"
             >
-                <span>OPEN</span>
 
-                <span class="action-arrow">
-                    →
+                <span class="button-fill"></span>
+
+                <span class="button-text">
+                    OPEN MAIL
                 </span>
+
             </button>
 
         </div>
 
 
 
-        <!-- TIME -->
+        <!-- MILANO TIME -->
 
-        <div
-            class="board-row entrance entrance-4"
-            id="timeRow"
-            role="button"
-            tabindex="0"
-        >
+        <div class="board-row row-enter delay-row-2">
 
-            <div class="row-number">
+            <div class="number">
                 02
             </div>
 
-            <div class="row-info">
+
+            <div class="row-text">
 
                 <div class="row-title">
                     MILANO TIME
@@ -127,32 +129,33 @@
 
 
             <button
-                class="action-button"
-                id="timeAction"
+                class="terminal-button"
+                id="timeButton"
                 type="button"
             >
-                <span>LIVE</span>
 
-                <span class="action-arrow">
-                    →
+                <span class="button-fill"></span>
+
+                <span class="button-text">
+                    OPEN CLOCK
                 </span>
+
             </button>
 
         </div>
 
 
 
-        <!-- THIRD -->
+        <!-- GATE 03 -->
 
-        <div
-            class="board-row disabled-row entrance entrance-5"
-        >
+        <div class="board-row row-enter delay-row-3">
 
-            <div class="row-number">
+            <div class="number">
                 03
             </div>
 
-            <div class="row-info">
+
+            <div class="row-text">
 
                 <div class="row-title">
                     GATE 03
@@ -165,83 +168,98 @@
             </div>
 
 
-            <div class="standby">
-                STANDBY
-            </div>
+            <button
+                class="terminal-button disabled-button"
+                type="button"
+                disabled
+            >
+
+                <span class="button-text dots">
+                    • • •
+                </span>
+
+            </button>
 
         </div>
+
 
     </section>
 
 
 
-    <!-- FOOTER -->
+    <!-- ========================= -->
+    <!-- НИЖНИЙ БЛОК -->
+    <!-- ========================= -->
 
-    <footer class="footer entrance entrance-6">
+    <footer class="airport-footer">
 
-        <div>
+        <div class="footer-line slide-line footer-delay-1">
             TERMINAL / 01
         </div>
 
-        <div class="footer-city">
+        <div class="footer-line slide-line footer-delay-2">
             MILANO
         </div>
 
-        <div class="footer-time" id="footerTime">
+        <div
+            class="footer-time slide-line footer-delay-3"
+            id="footerTime"
+        >
             --:--
         </div>
 
     </footer>
 
+
 </main>
 
 
 
-<!-- ============================= -->
-<!-- TIME SCREEN -->
-<!-- ============================= -->
+<!-- ===================================================== -->
+<!-- ЭКРАН ВРЕМЕНИ -->
+<!-- ===================================================== -->
 
 <section
     class="time-screen"
     id="timeScreen"
 >
 
-    <div class="time-noise"></div>
+
+    <div class="time-grain"></div>
 
 
-    <div class="giant-city">
+    <div class="background-milano">
         MILANO
     </div>
 
 
-    <header class="time-header">
+    <div class="time-top">
 
         <button
             class="back-button"
-            id="closeTime"
+            id="backButton"
             type="button"
         >
-            <span>←</span>
             BACK
         </button>
 
 
-        <div class="time-header-right">
-            MXP / LOCAL TIME
+        <div class="time-code">
+            MXP / LOCAL
         </div>
 
-    </header>
+    </div>
 
 
 
-    <div class="clock-wrapper">
+    <div class="clock-area">
 
         <div class="clock-label">
-            CURRENT LOCAL TIME
+            MILANO LOCAL TIME
         </div>
 
 
-        <div class="clock-line">
+        <div class="clock-row">
 
             <div
                 class="clock"
@@ -249,6 +267,7 @@
             >
                 00:00
             </div>
+
 
             <div
                 class="seconds"
@@ -260,7 +279,7 @@
         </div>
 
 
-        <div class="clock-divider"></div>
+        <div class="clock-line-divider"></div>
 
 
         <div class="clock-bottom">
@@ -280,10 +299,14 @@
 
     </div>
 
+
 </section>
 
 
-<script src="script.js"></script>
+
+<script src="script.js?v=10"></script>
+
 
 </body>
+
 </html>
