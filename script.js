@@ -1,5 +1,5 @@
 // =====================================================
-// OPEN CLOCK — SMOOTH
+// ULTRA SMOOTH OPEN CLOCK
 // =====================================================
 
 function openClock() {
@@ -8,9 +8,23 @@ function openClock() {
 
 
     /*
-    Если до этого экран закрывался,
-    убираем состояние closing.
+    Убираем состояние закрытия,
+    если оно осталось.
     */
+
+    timeScreen.classList.remove(
+        "clock-close"
+    );
+
+
+    /*
+    На всякий случай убираем
+    старые классы предыдущей версии.
+    */
+
+    timeScreen.classList.remove(
+        "active"
+    );
 
     timeScreen.classList.remove(
         "closing"
@@ -18,8 +32,8 @@ function openClock() {
 
 
     /*
-    Сначала делаем экран видимым,
-    но он всё ещё находится справа.
+    Сначала экран находится
+    за правой границей.
     */
 
     timeScreen.style.visibility =
@@ -27,21 +41,23 @@ function openClock() {
 
 
     /*
-    Два animation frame нужны,
-    чтобы браузер успел отрисовать
-    начальное положение.
+    Очень важно:
 
-    Это сильно уменьшает рывок
-    в Firefox / Telegram WebView.
+    ждём два кадра браузера,
+    чтобы Firefox точно успел
+    отрисовать начальную позицию.
+
+    После этого начинается
+    абсолютно плавный transition.
     */
 
     requestAnimationFrame(() => {
 
         requestAnimationFrame(() => {
 
-            timeScreen
-                .classList
-                .add("active");
+            timeScreen.classList.add(
+                "clock-open"
+            );
 
         });
 
@@ -52,14 +68,15 @@ function openClock() {
 
 
 // =====================================================
-// CLOSE CLOCK — SMOOTH
+// ULTRA SMOOTH CLOSE CLOCK
 // =====================================================
 
 function closeClock() {
 
     if (
-        !timeScreen.classList
-            .contains("active")
+        !timeScreen.classList.contains(
+            "clock-open"
+        )
     ) {
 
         return;
@@ -70,33 +87,34 @@ function closeClock() {
     haptic("light");
 
 
-    timeScreen
-        .classList
-        .remove("active");
+    timeScreen.classList.remove(
+        "clock-open"
+    );
 
 
-    timeScreen
-        .classList
-        .add("closing");
+    timeScreen.classList.add(
+        "clock-close"
+    );
 
 
     /*
-    Ждём окончания движения.
+    Закрытие занимает 1.65 сек.
     */
 
     setTimeout(
         () => {
 
-            timeScreen
-                .classList
-                .remove("closing");
+            timeScreen.classList.remove(
+                "clock-close"
+            );
 
 
             timeScreen.style.visibility =
                 "hidden";
 
         },
-        1300
+
+        1700
     );
 
 }
