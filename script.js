@@ -1,4 +1,10 @@
-const tg = window.Telegram?.WebApp;
+// ======================================
+// TELEGRAM MINI APP
+// ======================================
+
+const tg =
+    window.Telegram?.WebApp;
+
 
 if (tg) {
 
@@ -6,152 +12,404 @@ if (tg) {
 
     tg.expand();
 
-    try {
-
-        tg.setHeaderColor("#221813");
-        tg.setBackgroundColor("#221813");
-
-    } catch (e) {}
-
-}
-
-
-/* =========================
-START ANIMATION
-========================= */
-
-window.addEventListener("load", () => {
-
-    setTimeout(() => {
-
-        document.body.classList.add("ready");
-
-    }, 120);
-
-});
-
-
-/* =========================
-ELEMENTS
-========================= */
-
-const gmailButton =
-    document.getElementById("gmailButton");
-
-const timeButton =
-    document.getElementById("timeButton");
-
-const timeScreen =
-    document.getElementById("timeScreen");
-
-const closeTime =
-    document.getElementById("closeTime");
-
-const clock =
-    document.getElementById("clock");
-
-const seconds =
-    document.getElementById("seconds");
-
-const clockDate =
-    document.getElementById("clockDate");
-
-const footerTime =
-    document.getElementById("footerTime");
-
-
-/* =========================
-HAPTIC
-========================= */
-
-function haptic(type = "light") {
 
     try {
 
-        tg?.HapticFeedback?.impactOccurred(type);
+        tg.setHeaderColor("#241814");
 
-    } catch (e) {}
+        tg.setBackgroundColor("#241814");
 
-}
+    } catch (error) {
 
-
-/* =========================
-GMAIL
-========================= */
-
-gmailButton.addEventListener("click", () => {
-
-    haptic("light");
-
-    const url = "https://mail.google.com/";
-
-    if (tg?.openLink) {
-
-        tg.openLink(url);
-
-    } else {
-
-        window.open(url, "_blank");
+        console.log(
+            "Telegram colors unavailable"
+        );
 
     }
 
-});
+}
 
 
-/* =========================
-OPEN TIME
-========================= */
+// ======================================
+// PAGE ARRIVAL
+// ======================================
 
-timeButton.addEventListener("click", () => {
+window.addEventListener(
+    "load",
+    () => {
 
-    haptic("medium");
+        setTimeout(
+            () => {
 
-    timeScreen.classList.remove("closing");
+                document.body
+                    .classList
+                    .add("loaded");
 
-    timeScreen.classList.add("active");
+            },
+            120
+        );
 
-});
-
-
-/* =========================
-CLOSE TIME
-========================= */
-
-closeTime.addEventListener("click", closeTimeScreen);
-
-
-function closeTimeScreen() {
-
-    haptic("light");
-
-    timeScreen.classList.remove("active");
-
-    timeScreen.classList.add("closing");
+    }
+);
 
 
-    setTimeout(() => {
+// ======================================
+// ELEMENTS
+// ======================================
 
-        timeScreen.classList.remove("closing");
+const gmailRow =
+    document.getElementById(
+        "gmailRow"
+    );
 
-    }, 900);
+
+const gmailAction =
+    document.getElementById(
+        "gmailAction"
+    );
+
+
+const timeRow =
+    document.getElementById(
+        "timeRow"
+    );
+
+
+const timeAction =
+    document.getElementById(
+        "timeAction"
+    );
+
+
+const timeScreen =
+    document.getElementById(
+        "timeScreen"
+    );
+
+
+const closeTime =
+    document.getElementById(
+        "closeTime"
+    );
+
+
+const clock =
+    document.getElementById(
+        "clock"
+    );
+
+
+const seconds =
+    document.getElementById(
+        "seconds"
+    );
+
+
+const clockDate =
+    document.getElementById(
+        "clockDate"
+    );
+
+
+const footerTime =
+    document.getElementById(
+        "footerTime"
+    );
+
+
+// ======================================
+// HAPTIC FEEDBACK
+// ======================================
+
+function haptic(
+    type = "light"
+) {
+
+    try {
+
+        tg
+            ?.HapticFeedback
+            ?.impactOccurred(type);
+
+    } catch (error) {
+
+        // Outside Telegram:
+        // simply do nothing.
+
+    }
 
 }
 
 
-/* swipe to close */
+// ======================================
+// GMAIL
+// ======================================
+
+function openGmail() {
+
+    haptic("light");
+
+
+    const gmailUrl =
+        "https://mail.google.com/";
+
+
+    /*
+    Inside Telegram:
+    Telegram opens the link.
+
+    In normal browser:
+    regular new tab.
+    */
+
+    if (tg?.openLink) {
+
+        tg.openLink(
+            gmailUrl
+        );
+
+    } else {
+
+        window.open(
+            gmailUrl,
+            "_blank",
+            "noopener,noreferrer"
+        );
+
+    }
+
+}
+
+
+// Whole Gmail row
+
+gmailRow.addEventListener(
+    "click",
+    () => {
+
+        openGmail();
+
+    }
+);
+
+
+// Actual OPEN button
+
+gmailAction.addEventListener(
+    "click",
+    event => {
+
+        /*
+        Otherwise click would
+        fire twice:
+        button + row.
+        */
+
+        event.stopPropagation();
+
+        openGmail();
+
+    }
+);
+
+
+// Enter keyboard support
+
+gmailRow.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter" ||
+            event.key === " "
+        ) {
+
+            event.preventDefault();
+
+            openGmail();
+
+        }
+
+    }
+);
+
+
+// ======================================
+// TIME SCREEN
+// ======================================
+
+function openTimeScreen() {
+
+    haptic("medium");
+
+
+    timeScreen
+        .classList
+        .remove("closing");
+
+
+    /*
+    Remove and re-add active
+    to restart animation properly.
+    */
+
+    timeScreen
+        .classList
+        .remove("active");
+
+
+    void timeScreen.offsetWidth;
+
+
+    timeScreen
+        .classList
+        .add("active");
+
+}
+
+
+// Whole TIME row
+
+timeRow.addEventListener(
+    "click",
+    () => {
+
+        openTimeScreen();
+
+    }
+);
+
+
+// Actual LIVE button
+
+timeAction.addEventListener(
+    "click",
+    event => {
+
+        event.stopPropagation();
+
+        openTimeScreen();
+
+    }
+);
+
+
+// Keyboard
+
+timeRow.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter" ||
+            event.key === " "
+        ) {
+
+            event.preventDefault();
+
+            openTimeScreen();
+
+        }
+
+    }
+);
+
+
+// ======================================
+// CLOSE TIME SCREEN
+// ======================================
+
+function closeTimeScreen() {
+
+    if (
+        !timeScreen
+            .classList
+            .contains("active")
+    ) {
+
+        return;
+
+    }
+
+
+    haptic("light");
+
+
+    timeScreen
+        .classList
+        .remove("active");
+
+
+    timeScreen
+        .classList
+        .add("closing");
+
+
+    setTimeout(
+        () => {
+
+            timeScreen
+                .classList
+                .remove("closing");
+
+        },
+        1200
+    );
+
+}
+
+
+closeTime.addEventListener(
+    "click",
+    closeTimeScreen
+);
+
+
+// ESC in browser
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeTimeScreen();
+
+        }
+
+    }
+);
+
+
+// ======================================
+// SWIPE RIGHT TO CLOSE
+// ======================================
 
 let touchStartX = null;
+let touchStartY = null;
 
 
 timeScreen.addEventListener(
     "touchstart",
     event => {
 
+        const touch =
+            event.changedTouches[0];
+
+
         touchStartX =
-            event.changedTouches[0].screenX;
+            touch.screenX;
+
+
+        touchStartY =
+            touch.screenY;
 
     },
-    { passive: true }
+    {
+        passive: true
+    }
 );
 
 
@@ -159,16 +417,41 @@ timeScreen.addEventListener(
     "touchend",
     event => {
 
-        if (touchStartX === null) return;
+        if (
+            touchStartX === null ||
+            touchStartY === null
+        ) {
 
-        const endX =
-            event.changedTouches[0].screenX;
+            return;
 
-        const difference =
-            endX - touchStartX;
+        }
 
 
-        if (difference > 80) {
+        const touch =
+            event.changedTouches[0];
+
+
+        const differenceX =
+            touch.screenX -
+            touchStartX;
+
+
+        const differenceY =
+            Math.abs(
+                touch.screenY -
+                touchStartY
+            );
+
+
+        /*
+        Swipe right,
+        but not a vertical swipe.
+        */
+
+        if (
+            differenceX > 85 &&
+            differenceY < 90
+        ) {
 
             closeTimeScreen();
 
@@ -176,67 +459,86 @@ timeScreen.addEventListener(
 
 
         touchStartX = null;
+        touchStartY = null;
 
     },
-    { passive: true }
+    {
+        passive: true
+    }
 );
 
 
-/* =========================
-MILANO TIME
-========================= */
+// ======================================
+// MILANO TIME
+// ======================================
 
-function updateTime() {
+function updateMilanoTime() {
 
     const now =
         new Date();
 
 
-    const timeFormatter =
-        new Intl.DateTimeFormat(
-            "it-IT",
-            {
-                timeZone: "Europe/Rome",
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: false
-            }
-        );
-
-
-    const secondsFormatter =
-        new Intl.DateTimeFormat(
-            "it-IT",
-            {
-                timeZone: "Europe/Rome",
-                second: "2-digit"
-            }
-        );
-
-
-    const dateFormatter =
-        new Intl.DateTimeFormat(
-            "it-IT",
-            {
-                timeZone: "Europe/Rome",
-                weekday: "long",
-                day: "2-digit",
-                month: "long",
-                year: "numeric"
-            }
-        );
-
+    // Hours and minutes
 
     const time =
-        timeFormatter.format(now);
+        new Intl.DateTimeFormat(
+            "it-IT",
+            {
+                timeZone:
+                    "Europe/Rome",
+
+                hour:
+                    "2-digit",
+
+                minute:
+                    "2-digit",
+
+                hour12:
+                    false
+            }
+        )
+        .format(now);
 
 
-    const sec =
-        secondsFormatter.format(now);
+    // Seconds
 
+    const second =
+        new Intl.DateTimeFormat(
+            "it-IT",
+            {
+                timeZone:
+                    "Europe/Rome",
+
+                second:
+                    "2-digit"
+            }
+        )
+        .format(now);
+
+
+    // Date
 
     const date =
-        dateFormatter.format(now);
+        new Intl.DateTimeFormat(
+            "it-IT",
+            {
+                timeZone:
+                    "Europe/Rome",
+
+                weekday:
+                    "long",
+
+                day:
+                    "2-digit",
+
+                month:
+                    "long",
+
+                year:
+                    "numeric"
+            }
+        )
+        .format(now);
 
 
     clock.textContent =
@@ -244,22 +546,27 @@ function updateTime() {
 
 
     seconds.textContent =
-        sec;
-
-
-    footerTime.textContent =
-        time;
+        second;
 
 
     clockDate.textContent =
         date.toUpperCase();
 
+
+    footerTime.textContent =
+        time;
+
 }
 
 
-updateTime();
+// immediately
+
+updateMilanoTime();
+
+
+// every second
 
 setInterval(
-    updateTime,
+    updateMilanoTime,
     1000
 );
