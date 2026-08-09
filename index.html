@@ -2,73 +2,231 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     >
 
-    <title>Московское время</title>
+    <title>Milano Terminal</title>
 
-    <!-- Telegram Mini Apps -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-    <!-- Шрифт -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Стили -->
     <link rel="stylesheet" href="style.css">
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 
 <body>
 
-<div class="background">
-    <div class="circle c1"></div>
-    <div class="circle c2"></div>
-    <div class="circle c3"></div>
-</div>
+<div class="noise"></div>
 
-<main class="container">
+<div class="app" id="app">
 
-    <div class="glass-card">
+    <!-- HEADER -->
+    <header class="terminal-header">
 
-        <div class="logo">
-            🕒
+        <div class="terminal-brand">
+            <span class="terminal-code">MXP</span>
+
+            <div>
+                <div class="terminal-title">MILANO</div>
+                <div class="terminal-subtitle">DIGITAL TERMINAL</div>
+            </div>
         </div>
 
-        <h1>
-            Московское время
-        </h1>
-
-        <p class="subtitle">
-            Нажмите кнопку, чтобы узнать точное время
-        </p>
-
-        <div class="time-box">
-
-            <div id="time" class="time">
-                --:--:--
-            </div>
-
-            <div id="date" class="date">
-                —
-            </div>
-
+        <div class="terminal-status">
+            <span class="status-dot"></span>
+            ONLINE
         </div>
 
-        <button id="showTime" class="main-btn">
+    </header>
 
-            <span>
-                Показать время
-            </span>
+
+    <!-- BOARD -->
+    <main class="board">
+
+        <div class="board-labels">
+            <span>SERVICE</span>
+            <span>STATUS</span>
+        </div>
+
+
+        <!-- GMAIL -->
+        <button
+            class="board-row"
+            id="gmailBtn"
+            style="--delay: .08s"
+        >
+
+            <div class="row-number">01</div>
+
+            <div class="row-main">
+                <div class="row-title">GMAIL</div>
+                <div class="row-subtitle">MAIL SERVICE</div>
+            </div>
+
+            <div class="row-status">
+                OPEN
+                <span class="arrow">→</span>
+            </div>
 
         </button>
 
+
+        <!-- TIME -->
+        <button
+            class="board-row"
+            id="timeBtn"
+            style="--delay: .17s"
+        >
+
+            <div class="row-number">02</div>
+
+            <div class="row-main">
+                <div class="row-title">MILANO TIME</div>
+                <div class="row-subtitle">LOCAL CLOCK</div>
+            </div>
+
+            <div class="row-status">
+                LIVE
+                <span class="arrow">→</span>
+            </div>
+
+        </button>
+
+
+        <!-- THIRD -->
+        <button
+            class="board-row"
+            id="thirdBtn"
+            style="--delay: .26s"
+        >
+
+            <div class="row-number">03</div>
+
+            <div class="row-main">
+                <div class="row-title">GATE 03</div>
+                <div class="row-subtitle">NOT ASSIGNED</div>
+            </div>
+
+            <div class="row-status muted">
+                STANDBY
+            </div>
+
+        </button>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="terminal-footer">
+
+        <div>
+            TERMINAL / 01
+        </div>
+
+        <div class="footer-line"></div>
+
+        <div>
+            MILANO
+        </div>
+
+    </footer>
+
+</div>
+
+
+
+<!-- TIME SCREEN -->
+<section class="time-screen" id="timeScreen">
+
+    <header class="time-header">
+
+        <button id="backBtn" class="back-button">
+            ←
+        </button>
+
+        <div class="time-header-center">
+            <span class="small-label">DESTINATION</span>
+            <span class="destination">MILANO</span>
+        </div>
+
+        <div class="gate">
+            02
+        </div>
+
+    </header>
+
+
+    <div class="time-content">
+
+        <div class="time-caption">
+            LOCAL TIME
+        </div>
+
+
+        <div class="clock">
+
+            <div class="time-segment" id="hours">
+                00
+            </div>
+
+            <div class="colon">
+                :
+            </div>
+
+            <div class="time-segment" id="minutes">
+                00
+            </div>
+
+            <div class="colon seconds-colon">
+                :
+            </div>
+
+            <div class="time-segment seconds" id="seconds">
+                00
+            </div>
+
+        </div>
+
+
+        <div class="date" id="date">
+            --
+        </div>
+
+
+        <div class="arrival-line">
+
+            <span>LOCAL</span>
+
+            <div class="arrival-track">
+                <div class="track-dot"></div>
+            </div>
+
+            <span>MXP</span>
+
+        </div>
+
     </div>
 
-</main>
+
+    <div class="time-bottom">
+
+        <span>EUROPE / ROME</span>
+
+        <span class="live">
+            <i></i>
+            LIVE
+        </span>
+
+    </div>
+
+</section>
+
+
+
+<!-- Переход -->
+<div class="transition-cover" id="transitionCover"></div>
+
 
 <script src="script.js"></script>
 
