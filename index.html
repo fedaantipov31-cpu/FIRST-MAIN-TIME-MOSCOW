@@ -19,213 +19,268 @@
 
 <div class="noise"></div>
 
-<div class="app" id="app">
+<main class="app">
 
     <!-- HEADER -->
-    <header class="terminal-header">
 
-        <div class="terminal-brand">
-            <span class="terminal-code">MXP</span>
+    <header class="topbar entrance entrance-1">
 
-            <div>
-                <div class="terminal-title">MILANO</div>
-                <div class="terminal-subtitle">DIGITAL TERMINAL</div>
-            </div>
+        <div>
+            <div class="airport-code">MXP</div>
+            <div class="city-name">MILANO</div>
         </div>
 
-        <div class="terminal-status">
-            <span class="status-dot"></span>
-            ONLINE
+        <div class="terminal-info">
+            <span>DIGITAL TERMINAL</span>
+
+            <span class="online">
+                <span class="online-dot"></span>
+                ONLINE
+            </span>
         </div>
 
     </header>
 
 
-    <!-- BOARD -->
-    <main class="board">
+    <!-- TITLE -->
 
-        <div class="board-labels">
-            <span>SERVICE</span>
-            <span>STATUS</span>
+    <section class="hero">
+
+        <div class="service-label entrance entrance-2">
+            SERVICE STATUS
         </div>
+
+    </section>
+
+
+    <!-- BOARD -->
+
+    <section class="board">
 
 
         <!-- GMAIL -->
-        <button
-            class="board-row"
-            id="gmailBtn"
-            style="--delay: .08s"
+
+        <div
+            class="board-row entrance entrance-3"
+            id="gmailRow"
+            role="button"
+            tabindex="0"
         >
 
-            <div class="row-number">01</div>
-
-            <div class="row-main">
-                <div class="row-title">GMAIL</div>
-                <div class="row-subtitle">MAIL SERVICE</div>
+            <div class="row-number">
+                01
             </div>
 
-            <div class="row-status">
-                OPEN
-                <span class="arrow">→</span>
+            <div class="row-info">
+
+                <div class="row-title">
+                    GMAIL
+                </div>
+
+                <div class="row-subtitle">
+                    MAIL SERVICE
+                </div>
+
             </div>
 
-        </button>
+
+            <button
+                class="action-button"
+                id="gmailAction"
+                type="button"
+            >
+                <span>OPEN</span>
+
+                <span class="action-arrow">
+                    →
+                </span>
+            </button>
+
+        </div>
+
 
 
         <!-- TIME -->
-        <button
-            class="board-row"
-            id="timeBtn"
-            style="--delay: .17s"
+
+        <div
+            class="board-row entrance entrance-4"
+            id="timeRow"
+            role="button"
+            tabindex="0"
         >
 
-            <div class="row-number">02</div>
-
-            <div class="row-main">
-                <div class="row-title">MILANO TIME</div>
-                <div class="row-subtitle">LOCAL CLOCK</div>
+            <div class="row-number">
+                02
             </div>
 
-            <div class="row-status">
-                LIVE
-                <span class="arrow">→</span>
+            <div class="row-info">
+
+                <div class="row-title">
+                    MILANO TIME
+                </div>
+
+                <div class="row-subtitle">
+                    LOCAL CLOCK
+                </div>
+
             </div>
 
-        </button>
+
+            <button
+                class="action-button"
+                id="timeAction"
+                type="button"
+            >
+                <span>LIVE</span>
+
+                <span class="action-arrow">
+                    →
+                </span>
+            </button>
+
+        </div>
+
 
 
         <!-- THIRD -->
-        <button
-            class="board-row"
-            id="thirdBtn"
-            style="--delay: .26s"
+
+        <div
+            class="board-row disabled-row entrance entrance-5"
         >
 
-            <div class="row-number">03</div>
-
-            <div class="row-main">
-                <div class="row-title">GATE 03</div>
-                <div class="row-subtitle">NOT ASSIGNED</div>
+            <div class="row-number">
+                03
             </div>
 
-            <div class="row-status muted">
+            <div class="row-info">
+
+                <div class="row-title">
+                    GATE 03
+                </div>
+
+                <div class="row-subtitle">
+                    NOT ASSIGNED
+                </div>
+
+            </div>
+
+
+            <div class="standby">
                 STANDBY
             </div>
 
-        </button>
+        </div>
 
-    </main>
+    </section>
+
 
 
     <!-- FOOTER -->
-    <footer class="terminal-footer">
+
+    <footer class="footer entrance entrance-6">
 
         <div>
             TERMINAL / 01
         </div>
 
-        <div class="footer-line"></div>
-
-        <div>
+        <div class="footer-city">
             MILANO
+        </div>
+
+        <div class="footer-time" id="footerTime">
+            --:--
         </div>
 
     </footer>
 
-</div>
+</main>
 
 
 
+<!-- ============================= -->
 <!-- TIME SCREEN -->
-<section class="time-screen" id="timeScreen">
+<!-- ============================= -->
+
+<section
+    class="time-screen"
+    id="timeScreen"
+>
+
+    <div class="time-noise"></div>
+
+
+    <div class="giant-city">
+        MILANO
+    </div>
+
 
     <header class="time-header">
 
-        <button id="backBtn" class="back-button">
-            ←
+        <button
+            class="back-button"
+            id="closeTime"
+            type="button"
+        >
+            <span>←</span>
+            BACK
         </button>
 
-        <div class="time-header-center">
-            <span class="small-label">DESTINATION</span>
-            <span class="destination">MILANO</span>
-        </div>
 
-        <div class="gate">
-            02
+        <div class="time-header-right">
+            MXP / LOCAL TIME
         </div>
 
     </header>
 
 
-    <div class="time-content">
 
-        <div class="time-caption">
-            LOCAL TIME
+    <div class="clock-wrapper">
+
+        <div class="clock-label">
+            CURRENT LOCAL TIME
         </div>
 
 
-        <div class="clock">
+        <div class="clock-line">
 
-            <div class="time-segment" id="hours">
-                00
+            <div
+                class="clock"
+                id="clock"
+            >
+                00:00
             </div>
 
-            <div class="colon">
-                :
-            </div>
-
-            <div class="time-segment" id="minutes">
-                00
-            </div>
-
-            <div class="colon seconds-colon">
-                :
-            </div>
-
-            <div class="time-segment seconds" id="seconds">
+            <div
+                class="seconds"
+                id="seconds"
+            >
                 00
             </div>
 
         </div>
 
 
-        <div class="date" id="date">
-            --
-        </div>
+        <div class="clock-divider"></div>
 
 
-        <div class="arrival-line">
+        <div class="clock-bottom">
 
-            <span>LOCAL</span>
-
-            <div class="arrival-track">
-                <div class="track-dot"></div>
+            <div class="clock-city">
+                MILANO
             </div>
 
-            <span>MXP</span>
+            <div
+                class="clock-date"
+                id="clockDate"
+            >
+                —
+            </div>
 
         </div>
-
-    </div>
-
-
-    <div class="time-bottom">
-
-        <span>EUROPE / ROME</span>
-
-        <span class="live">
-            <i></i>
-            LIVE
-        </span>
 
     </div>
 
 </section>
-
-
-
-<!-- Переход -->
-<div class="transition-cover" id="transitionCover"></div>
 
 
 <script src="script.js"></script>
